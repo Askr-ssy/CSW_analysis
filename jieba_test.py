@@ -1,5 +1,8 @@
 import os
 import jieba
+
+fc =lambda str:" ".join(jieba.cut(in_str))
+
 def get_target_file(need_TW = False):
     dir_path = os.path.dirname(os.path.abspath(__file__))
     for file in os.listdir("test"):
@@ -9,11 +12,6 @@ def get_target_file(need_TW = False):
                 yield os.path.join(dir_path,"test",file)
             elif "tw" in name[0] and need_TW:
                 yield os.path.join(dir_path,"test",file)
-
-
-def fc(in_str):
-    out_str = " ".join(jieba.cut(in_str))
-    return out_str
 
 
 jieba.initialize()
