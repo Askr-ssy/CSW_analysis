@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 # copy fom wikipedia
+# zh_cn to zh_tw
 
 zh2Hant = {
 '呆': '獃',

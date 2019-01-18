@@ -1,9 +1,12 @@
 import os
 import jieba
 
-fc =lambda str:" ".join(jieba.cut(in_str))
+fc =lambda str:" ".join(jieba.cut(str))
 
 def get_target_file(need_TW = False):
+    '''
+    生成测试文件列表
+    '''
     dir_path = os.path.dirname(os.path.abspath(__file__))
     for file in os.listdir("test"):
         name = file.split(".")
@@ -14,6 +17,9 @@ def get_target_file(need_TW = False):
                 yield os.path.join(dir_path,"test",file)
 
 if __name__ == "__main__":
+    '''
+    使用jieba切分词语并且输出文件
+    '''
     jieba.initialize()
     for file_address in get_target_file():
         out = []
