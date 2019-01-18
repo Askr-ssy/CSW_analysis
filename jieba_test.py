@@ -1,14 +1,18 @@
 import os
 import jieba
+import json
 
+from _utils import find_all_file
+
+ROOT=os.path.dirname(os.path.abspath(__file__))
 fc =lambda str:" ".join(jieba.cut(str))
+path=lambda ROOT,*a:os.path.join(ROOT,*a)
 
 def get_target_file(need_TW = False):
     '''
     生成测试文件列表
     '''
-    dir_path = os.path.dirname(os.path.abspath(__file__))
-    for file in os.listdir("test"):
+    for file in find_all_file(path(ROOT,'test')):
         name = file.split(".")
         if name[1] == "utf8":
             if not "tw" in name[0]:

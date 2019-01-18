@@ -1,5 +1,8 @@
 import os
 import time
+
+from ._utils import find_all_file
+
 def get_target_file(need_TW = False):
     dir_path = os.path.dirname(os.path.abspath(__file__))
     for file in os.listdir("res"):
