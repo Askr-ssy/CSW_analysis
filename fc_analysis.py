@@ -1,16 +1,18 @@
 import os
 import time
 
-from ._utils import find_all_file
+from _utils import find_all_file,cut_filename
+
+ROOT=os.path.dirname(os.path.abspath(__file__))
+path=lambda ROOT,*a:os.path.join(ROOT,*a)
 
 def get_target_file(need_TW = False):
-    dir_path = os.path.dirname(os.path.abspath(__file__))
-    for file in os.listdir("res"):
-        name = file.split(".")
-        if name[1] == "utf8":
-            res_address = os.path.join(dir_path,"res",file)
-        if os.path.exists(os.path.join(dir_path,"gold",file.replace("res","test_gold"))):
-            gold_address = os.path.join(dir_path,"gold",file.replace("res","test_gold"))
+    for file_path in find_all_file(path(ROOT,'res'),suffix_filter='utf8'):
+        name = cut_filename(file_path)
+        if name[2] == ".utf8":
+            res_address = os.path.join(ROOT,"res",file_path)
+        if os.path.exists(os.path.join(ROOT,"gold",file_path.replace("res","test_gold"))):
+            gold_address = os.path.join(ROOT,"gold",file_path.replace("res","test_gold"))
         yield res_address,gold_address
 
 
