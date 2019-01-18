@@ -1,5 +1,6 @@
 import os
 import time
+import sys
 
 from _utils import find_all_file,cut_filename
 
@@ -7,12 +8,15 @@ ROOT=os.path.dirname(os.path.abspath(__file__))
 path=lambda ROOT,*a:os.path.join(ROOT,*a)
 
 def get_target_file(need_TW = False):
+    '''
+    获取目标路径
+    '''
     for file_path in find_all_file(path(ROOT,'res'),suffix_filter='utf8'):
         name = cut_filename(file_path)
         if name[2] == ".utf8":
-            res_address = os.path.join(ROOT,"res",file_path)
-        if os.path.exists(os.path.join(ROOT,"gold",file_path.replace("res","test_gold"))):
-            gold_address = os.path.join(ROOT,"gold",file_path.replace("res","test_gold"))
+            res_address = file_path
+        if os.path.exists(path(ROOT,"gold",name[1].replace("res","test_gold")+name[2])):
+            gold_address = path(ROOT,"gold",name[1].replace("res","test_gold")+name[2])
         yield res_address,gold_address
 
 
@@ -40,7 +44,7 @@ for res_address,gold_address in get_target_file():
                     res_line =res_file.readline()
                     gold_line = gold_file.readline()
                     if  not(res_line=="stop code\n"):
-                        print("\r"+str(line)+"\t"+gold_line.replace("\n",''),end="")
+                        sys.stdout.write("\r"+str(line)+"\t"+gold_line.replace("\n",''))
                         temp_res = str2li(res_line.split(" "))
                         temp_gold = str2li(gold_line.split(" "))
                         N = len(temp_gold)
