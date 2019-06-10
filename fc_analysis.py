@@ -14,10 +14,10 @@ def get_target_file(need_TW = False):
     for file_path in find_all_file(path(ROOT,'test'),suffix_filter='utf8'):
         name = cut_filename(file_path)
         if name[2] == ".utf8":
-            res_address = file_path
-        if os.path.exists(path(ROOT,"gold",name[1].replace("test","test_gold")+name[2])):
-            gold_address = path(ROOT,"gold",name[1].replace("test","test_gold")+name[2])
-        yield res_address,gold_address
+            test_address = file_path
+        if os.path.exists(path(ROOT,"gold",name[1]+name[2])):
+            gold_address = path(ROOT,"gold",name[1]+name[2])
+        yield test_address,gold_address
 
 
 def str2li(word_li:list):
