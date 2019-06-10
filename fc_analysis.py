@@ -9,14 +9,14 @@ path=lambda ROOT,*a:os.path.join(ROOT,*a)
 
 def get_target_file(need_TW = False):
     '''
-    获取目标路径
+    获取已分词文本和黄金切分路径
     '''
-    for file_path in find_all_file(path(ROOT,'res'),suffix_filter='utf8'):
+    for file_path in find_all_file(path(ROOT,'test'),suffix_filter='utf8'):
         name = cut_filename(file_path)
         if name[2] == ".utf8":
             res_address = file_path
-        if os.path.exists(path(ROOT,"gold",name[1].replace("res","test_gold")+name[2])):
-            gold_address = path(ROOT,"gold",name[1].replace("res","test_gold")+name[2])
+        if os.path.exists(path(ROOT,"gold",name[1].replace("test","test_gold")+name[2])):
+            gold_address = path(ROOT,"gold",name[1].replace("test","test_gold")+name[2])
         yield res_address,gold_address
 
 
@@ -29,7 +29,7 @@ def str2li(word_li:list):
     return outdata
 
 
-name =input("res:")
+name =input("res:") # 输出路径名称
 line = 0
 for res_address,gold_address in get_target_file():
     print(res_address)
@@ -49,13 +49,13 @@ for res_address,gold_address in get_target_file():
                         temp_gold = str2li(gold_line.split(" "))
                         N = len(temp_gold)
                         CandE = len(temp_res)
-                        C = len([val for val in temp_res if val in temp_gold])
+                        C = len([val for val in temp_res if val in temp_gold])  # 召回数量
                         E = CandE -C
-                        R =C/N
+                        R =C/N   
                         P = C/CandE
-                        ER = E/N
+                        ER = E/N    
                         try:
-                            F = 2*P*R/(P+R)
+                            F = 2*P*R/(P+R) # f1
                         except ZeroDivisionError:
                             F = 0
                         log_file.write(res_line)
